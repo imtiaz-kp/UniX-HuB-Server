@@ -23,6 +23,9 @@ exports.register= async(req,res)=>{
     res.status(401).json(`register API failed ,error:${err}`)
   }
 }
+
+
+
 exports.login=async (req,res)=>{
   console.log("inside login function")
   const {email,password}=req.body
