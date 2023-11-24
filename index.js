@@ -13,6 +13,7 @@ UxServer.use(cors())
 UxServer.use(express.json())
 // UxServer.use(appMiddleware)
 UxServer.use(router)
+UxServer.use('/uploads',express.static('./uploads'))
 //router should use after use cors and json parse
 
 //customise the prot no

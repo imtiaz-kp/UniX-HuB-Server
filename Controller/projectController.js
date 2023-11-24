@@ -27,7 +27,7 @@ exports.addprojects=async(req,res)=>{
     }catch(err){
         res.status(401).json( `request failed Error ${err}`)   
     }
-    res.status(200).json("addProject request recived!!!")
+    
 }
 //getuser projects
 exports.allUserProjects=async(req,res)=>{
@@ -43,9 +43,13 @@ exports.allUserProjects=async(req,res)=>{
 
 //getallprojects
 exports.getallProjects=async(req,res)=>{
-
+    const searchKey=req.query.search
+    const query={
+        languages:{$regex:searchKey,$options:"i"}
+       
+    }
     try{
-       const allProjects=await projects.find()
+       const allProjects=await projects.find(query)
        res.status(200).json(allProjects)
    
     }catch(err){
