@@ -67,3 +67,36 @@ exports.getallProjects=async(req,res)=>{
        res.status(401).json(err)
      }
    }
+
+   //edit project
+   exports.editProjectController=async(req,res)=>{
+     //get project id 
+     const {id}=req.params //path parameter
+     const userId=req.payload
+     const {title,languages,overview,github,website,projectImage}=req.body
+     const uploadProjectImage=req.file?req.file.filename:projectImage
+
+     try{
+       const updateProject=await projects.findByIdAndUpdate({_id:id},{title, languages, overview, github, website, "projectImage":uploadProjectImage, userId},{new:true})
+       await updateProject.save()
+       res.status(200).json(updateProject)
+     }catch(err){
+        res.status(401).json(err)
+
+        }
+    }
+
+ //deleteProject
+        exports.deleteProjectController=async(req,res)=>{
+        const {id}=req.params
+        try{
+        const deleteProject=await projects.findByIdAndDelete({_id:id})
+        res.status(200).json(deleteProject)
+
+        }catch(err){
+            res.status(401).json(err)
+        
+        }
+        }
+
+   
