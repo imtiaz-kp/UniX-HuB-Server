@@ -2,10 +2,10 @@ const projects = require ('../Models/projectSchema')
 
 //add projects
 exports.addprojects=async(req,res)=>{
-    console.log("inside add project function")
+   
     const userId=req.payload
     const projectImage=req.file.filename
-    console.log(projectImage);
+    
     const {title,languages,overview,github,website}=req.body
     // console.log(title,languages,overview,github,website)
     console.log(`${userId}`)

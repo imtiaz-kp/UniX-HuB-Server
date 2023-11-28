@@ -5,9 +5,9 @@ const users = require("../Models/userSchema");
 const jwt = require("jsonwebtoken")
 // const user = require('../Models/userSchema')
 exports.register= async(req,res)=>{
-    console.log('inside refister constroler function');
+  
     const {username,email,password}= req.body
-    console.log(username,email,password)
+    
   try{
     const existingUser = await users.findOne({email})
     if(existingUser){
@@ -27,14 +27,14 @@ exports.register= async(req,res)=>{
 
 
 exports.login=async (req,res)=>{
-  console.log("inside login function")
+
   const {email,password}=req.body
 try{
   const existingUser = await users.findOne({email,password})
   if(existingUser){
-    console.log(existingUser)
+  
     const token= jwt.sign({userId:existingUser._id},"supersecretkey12345")
-    console.log(token)
+
     res.status(200).json({
       
       existingUser,token
@@ -47,3 +47,18 @@ try{
   res.status(401).json(`Login API Faild , Error ${err}`)
 }
 }
+
+exports.editProfileController=async(req,res)=>{
+
+  const userId=req.payload
+  const {username,email,password,github,linkedin,profile}=req.body
+  const uploadProfileImage=req.file?req.file.filename:profile
+  try{
+    const updateProfile=await users.findByIdAndUpdate({_id:userId},{username,email,password,github,linkedin,"profile":uploadProfileImage},{new:true})
+    await updateProfile.save()
+    res.status(200).json(updateProfile)
+  }catch(err){
+     res.status(401).json(err)
+
+     }
+ }
