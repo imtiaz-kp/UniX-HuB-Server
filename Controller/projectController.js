@@ -6,9 +6,9 @@ exports.addprojects=async(req,res)=>{
     const userId=req.payload
     const projectImage=req.file.filename
     
-    const {title,languages,overview,github,website}=req.body
+    const {title,languages,overview,github,website,userName}=req.body
     // console.log(title,languages,overview,github,website)
-    console.log(`${userId}`)
+   
     try{
         const existingProject = await  projects.findOne({github})
         if(existingProject){
@@ -16,7 +16,7 @@ exports.addprojects=async(req,res)=>{
 
         }else{
              const newProject=new projects({
-                title,languages,overview,github,website,projectImage,userId
+                title,languages,overview,github,website,projectImage,userId,userName
              })
              await newProject.save()
              res.status(200).json(newProject)
