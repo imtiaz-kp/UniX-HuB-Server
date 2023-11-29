@@ -1,7 +1,7 @@
 //register
+const users = require("../Models/userSchema");
 
 const { JsonWebTokenError } = require("jsonwebtoken");
-const users = require("../Models/userSchema");
 const jwt = require("jsonwebtoken")
 // const user = require('../Models/userSchema')
 exports.register= async(req,res)=>{
@@ -14,7 +14,7 @@ exports.register= async(req,res)=>{
         res.status(406).json("Account already exist !! please Login")
     }else{
         const newUser = new users({
-        username:username,email,password,github:"",linkedin:"",profile:""});
+        username,email,password,github:"",linkedin:"",profile:""})
         await newUser.save()
         res.status(200).json(newUser)
     }

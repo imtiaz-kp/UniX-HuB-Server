@@ -6,7 +6,7 @@ const userSchema= new mongoose.Schema({
     username:{
         type:String,
         required:true,
-        min:[3 ,`Must be at least 3 ,got`]
+        min:[3 ,`Must be at least 3 ,got{VALUE}`]
     },
     email:{
         type:String,
